@@ -320,13 +320,13 @@
 
   <header class="masthead">
     <div>
-      <div class="brand-line">Sistem Evaluasi Kinerja</div>
-      <h1>Formulir Evaluasi Kinerja Karyawan</h1>
+      <div class="brand-line">Performance Evaluation System</div>
+      <h1>Employee Performance Evaluation Form</h1>
       <input class="company-input" id="companyName" type="text" placeholder="Indonesia Manufacturing Co.">
     </div>
     <div class="period">
           Evaluation Period<br>
-      <input class="company-input" id="periodInput" type="text" placeholder= "Semester I 2026" style="width:600px; margin-top:4px;">
+      <input class="company-input" id="periodInput" type="text" placeholder="Semester I 2026" style="width:600px; margin-top:4px; padding-left:20px;">
     </div>
   </header>
 
@@ -348,7 +348,7 @@
             <option value="marketing">Marketing & Sales</option>
             <option value="finance">Finance & Accounting</option>
             <option value="hr">Human Resources & GA</option>
-            <option value="it">IT & Sistem</option>
+            <option value="it">IT & Systems</option>
             <option value="support">General Administration / Other</option>
           </select>
         </div>
@@ -359,19 +359,19 @@
 
     <section class="card">
       <h2>Hard Skill <span id="divisionTag" style="color:var(--ink-soft); text-transform:none; font-weight:500;">(Production/Operational)</span></h2>
-      <p class="sub">Parameter menyesuaikan otomatis sesuai divisi. Nama &amp; deskripsi parameter <strong>bisa diklik dan diedit langsung</strong> agar sesuai istilah SOP internal perusahaan Anda. Bobot kategori: 40%.</p>
+      <p class="sub"> Assessment parameters are automatically adjusted based on the selected department. Parameter names and descriptions can be edited directly to match your company's internal SOP terminology. Category weighting: 40%.</p>
       <div id="hardSkillList"></div>
     </section>
 
     <section class="card">
       <h2>Soft Skill</h2>
-      <p class="sub">Parameter perilaku kerja, berlaku untuk seluruh divisi. Bobot kategori: 30%.</p>
+      <p class="sub">Work behavior parameters, applicable to all departments. Category weighting: 30%.</p>
       <div id="softSkillList"></div>
     </section>
 
     <section class="card">
       <h2>KPI &amp; Attendance</h2>
-      <p class="sub">Enter achievement percentage — the system automatically converts it to a scale of 1–5. Bobot kategori: 30%.</p>
+      <p class="sub">Enter achievement percentage — the system automatically converts it to a scale of 1–5. Category weighting: 30%.</p>
       <div id="kpiList"></div>
     </section>
 
@@ -385,7 +385,7 @@
 
   <aside class="panel-sticky">
     <div class="gauge-card">
-      <div class="eyebrow">Score Total (Real-time)</div>
+      <div class="eyebrow">Final Score (Real-time)</div>
       <div class="gauge-wrap">
         <svg viewBox="0 0 220 130" width="100%" height="100%">
           <path d="M 15 115 A 95 95 0 0 1 205 115" fill="none" stroke="#334A57" stroke-width="14" stroke-linecap="round"/>
@@ -421,12 +421,12 @@
 </div>
 
 <script>
-const SCALE_LABELS = ["Sangat Kurang","Kurang","Cukup","Baik","Sangat Baik"];
+const SCALE_LABELS = ["Very Bad", "Bad", "Average", "Good", "Excellent"];
 
 const DIVISION_LABELS = {
-  core: "Produksi/Operasional", qc: "Quality Control", purchasing: "Purchasing",
+  core: "Production/Operations", qc: "Quality Control", purchasing: "Purchasing",
   marketing: "Marketing & Sales", finance: "Finance & Accounting", hr: "HR & GA",
-  it: "IT & Sistem", support: "General Administration / Other"
+  it: "IT & Systems", support: "General Administration / Other"
 };
 
 const HARD_SKILLS = {
@@ -526,7 +526,7 @@ function buildScaleRow(container, key, title, desc, group, editable){
       <div class="desc ${editClass}" ${editAttr}>${desc}</div>
     </div>
     <div class="scale" data-key="${key}"></div>
-    <div class="scale-legend"><span>1 · Sangat Kurang</span><span>3 · Cukup</span><span>5 · Sangat Baik</span></div>
+    <div class="scale-legend"><span>1 · Very Bad</span><span>3 · Average</span><span>5 · Excellent</span></div>
   `;
   const scaleEl = item.querySelector('.scale');
   for(let i=1;i<=5;i++){
@@ -566,8 +566,8 @@ function renderSoftSkills(){
 function renderKpi(){
   const container = document.getElementById('kpiList');
   const rows = [
-    {key:'achievement', label:'Pencapaian Target KPI', hint:'% capaian terhadap target kerja periode ini'},
-    {key:'attendance', label:'Tingkat Kehadiran', hint:'% kehadiran efektif terhadap hari kerja'}
+    {key:'achievement', label:'KPI Achievement', hint:'% achievement against work targets for this period'},
+    {key:'attendance', label:'Attendance Rate', hint:'% effective attendance against working days'}
   ];
   rows.forEach(r=>{
     const row = document.createElement('div');
@@ -625,7 +625,7 @@ function recalculate(){
   if(hardAvg===null || softAvg===null || kpiAvg===null){
     gaugeEl.innerHTML = (hardAvg||softAvg||kpiAvg) ?
       `${(((hardAvg||0)*0.4)+((softAvg||0)*0.3)+((kpiAvg||0)*0.3)).toFixed(1)}<span>/5</span>` : `0.0<span>/5</span>`;
-    tagEl.textContent = 'Menunggu input lengkap';
+    tagEl.textContent = 'Waiting for complete input';
     tagEl.style.background = '#3A4B57'; tagEl.style.color='#C7D3D9';
     arcEl.setAttribute('stroke-dashoffset', 298);
     flagEl.classList.remove('show');
@@ -645,7 +645,7 @@ function recalculate(){
   if(failedCats.length > 0){
     tagEl.textContent = 'Not Recommended';
     tagEl.style.background = 'var(--bad-bg)'; tagEl.style.color = 'var(--bad)';
-    flagEl.textContent = `Below minimum threshold (< 3.0): ${failedCats.join(', ')}. Kriteria kelulusan mensyaratkan seluruh kategori ≥ 3.0, bukan hanya skor total.`;
+    flagEl.textContent = `Below minimum threshold (< 3.0): ${failedCats.join(', ')}. The passing criteria require all categories to be ≥ 3.0, not just the total score.`;
     flagEl.classList.add('show');
   } else if(total >= 4.0){
     tagEl.textContent = 'High Recommendation';
@@ -672,7 +672,7 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 });
 
 document.getElementById('resetBtn').addEventListener('click', ()=>{
-  if(confirm('Reset seluruh isian formulir?')) location.reload();
+  if(confirm('Reset all form inputs?')) location.reload();
 });
 
 renderHardSkills('core');

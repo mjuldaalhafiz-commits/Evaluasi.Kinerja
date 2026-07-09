@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulir Evaluasi Kinerja Karyawan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite-bg:#F1F3F4;
+    --panel:#FFFFFF;
+    --ink:#1E2530;
+    --ink-soft:#5B6472;
+    --steel:#2C4A5E;
+    --steel-dark:#1B303E;
+    --amber:#D98E04;
+    --amber-soft:#FCE9C6;
+    --line:#DADFE3;
+    --ok:#2F7D5C;
+    --ok-bg:#E4F3EC;
+    --warn:#B4560F;
+    --warn-bg:#FBEADB;
+    --bad:#B23A3A;
+    --bad-bg:#FBE4E4;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--graphite-bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    line-height:1.4;
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px 20px 120px;
+    display:grid;
+    grid-template-columns:1fr 320px;
+    gap:24px;
+  }
+  header.masthead{
+    grid-column:1/-1;
+    background:var(--steel-dark);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:26px 30px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    justify-content:space-between;
+    align-items:flex-end;
+  }
+  .masthead .brand-line{
+    display:flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:#9FB2BF;
+    margin-bottom:6px;
+  }
+  .masthead .brand-line::before{
+    content:"";
+    width:8px;height:8px;border-radius:50%;
+    background:var(--amber);
+    display:inline-block;
+  }
+  .masthead h1{
+    margin:0;
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .masthead .company-input{
+    background:transparent;
+    border:none;
+    border-bottom:1px dashed #547080;
+    color:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    padding:4px 0;
+    width:240px;
+  }
+  .masthead .company-input::placeholder{color:#7E97A4;}
+  .masthead .company-input:focus{outline:none; border-bottom-color:var(--amber);}
+  .masthead .period{
+    text-align:right;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:#9FB2BF;
+  }
+  main{display:flex; flex-direction:column; gap:20px;}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .card h2{
+    margin:0 0 4px;
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--steel);
+    font-weight:700;
+  }
+  .card .sub{
+    font-size:12.5px; color:var(--ink-soft); margin:0 0 16px;
+  }
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .field label{
+    display:block; font-size:12px; font-weight:600; color:var(--ink-soft);
+    margin-bottom:5px; text-transform:uppercase; letter-spacing:.03em;
+  }
+  .field input[type=text], .field input[type=date], .field select, .field input[type=number]{
+    width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:6px;
+    font-family:inherit; font-size:14px; color:var(--ink); background:#FAFBFB;
+  }
+  .field input:focus, .field select:focus{outline:2px solid var(--steel); outline-offset:1px; background:#fff;}
+
+  .item{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:10px 16px;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .item:last-child{border-bottom:none;}
+  .item .name{font-size:14px; font-weight:500;}
+  .item .desc{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .editable-field{
+    border-bottom:1px dashed transparent;
+    border-radius:3px;
+    padding:1px 3px;
+    margin:-1px -3px;
+    cursor:text;
+  }
+  .editable-field:hover{border-bottom-color:var(--amber); background:var(--amber-soft);}
+  .editable-field:focus{outline:none; border-bottom-color:var(--steel); background:#fff;}
+  .scale{
+    display:flex; gap:4px;
+  }
+  .scale button{
+    width:38px; height:38px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#FAFBFB;
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:all .12s ease;
+  }
+  .scale button:hover{border-color:var(--steel);}
+  .scale button.active{
+    background:var(--steel);
+    border-color:var(--steel);
+    color:#fff;
+  }
+  .scale-legend{
+    grid-column:1/-1;
+    display:flex; justify-content:space-between;
+    font-size:10.5px; color:var(--ink-soft);
+    font-family:'IBM Plex Mono',monospace;
+    padding-top:2px;
+  }
+  .kpi-row{
+    display:grid; grid-template-columns:1fr 140px 90px; gap:14px; align-items:end;
+    padding:12px 0; border-bottom:1px solid var(--line);
+  }
+  .kpi-row:last-child{border-bottom:none;}
+  .kpi-row .converted{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    text-align:center;
+    background:var(--amber-soft);
+    border-radius:6px;
+    padding:9px 6px;
+    color:#7A4E00;
+    font-size:14px;
+  }
+  textarea{
+    width:100%; min-height:90px; border:1px solid var(--line); border-radius:6px;
+    font-family:inherit; font-size:14px; padding:10px; color:var(--ink); background:#FAFBFB; resize:vertical;
+  }
+  textarea:focus{outline:2px solid var(--steel); outline-offset:1px; background:#fff;}
+
+  /* Verdict panel */
+  .panel-sticky{
+    position:sticky; top:20px;
+    display:flex; flex-direction:column; gap:16px;
+    align-self:start;
+  }
+  .gauge-card{
+    background:var(--steel-dark);
+    border-radius:var(--radius);
+    padding:24px;
+    color:#fff;
+    text-align:center;
+  }
+  .gauge-card .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:#9FB2BF; margin-bottom:14px;
+  }
+  .gauge-wrap{position:relative; width:220px; height:130px; margin:0 auto;}
+  .gauge-score{
+    position:absolute; bottom:6px; left:0; right:0;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:38px; font-weight:700;
+  }
+  .gauge-score span{font-size:16px; color:#9FB2BF; font-weight:500;}
+  .verdict-tag{
+    margin-top:10px;
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:700;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .cat-breakdown{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .cat-breakdown h3{
+    margin:0 0 12px; font-size:12px; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--steel);
+  }
+  .cat-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:8px 0; border-bottom:1px solid var(--line); font-size:13px;
+  }
+  .cat-row:last-child{border-bottom:none;}
+  .cat-row .val{
+    font-family:'IBM Plex Mono',monospace; font-weight:600;
+    padding:2px 8px; border-radius:5px; font-size:12.5px;
+  }
+  .flag-box{
+    font-size:12px;
+    padding:10px 12px;
+    border-radius:8px;
+    background:var(--bad-bg);
+    color:var(--bad);
+    display:none;
+    line-height:1.5;
+  }
+  .flag-box.show{display:block;}
+
+  .actions{
+    display:flex; gap:10px;
+  }
+  .btn{
+    flex:1;
+    padding:12px 14px;
+    border-radius:8px;
+    border:none;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    cursor:pointer;
+  }
+  .btn-primary{background:var(--amber); color:#3A2600;}
+  .btn-primary:hover{background:#C57F00;}
+  .btn-ghost{background:transparent; border:1px solid var(--line); color:var(--ink-soft);}
+  .btn-ghost:hover{border-color:var(--steel); color:var(--steel);}
+
+  footer.note{
+    grid-column:1/-1;
+    font-size:11.5px; color:var(--ink-soft);
+    text-align:center; padding-top:6px;
+  }
+
+  @media (max-width:900px){
+    .wrap{grid-template-columns:1fr; padding-bottom:200px;}
+    .panel-sticky{position:fixed; bottom:0; left:0; right:0; top:auto; z-index:50; padding:14px; background:var(--graphite-bg); box-shadow:0 -6px 20px rgba(0,0,0,.12); border-radius:16px 16px 0 0;}
+    .gauge-card{padding:16px;}
+    .gauge-wrap{width:160px; height:96px;}
+    .gauge-score{font-size:26px;}
+    .cat-breakdown{display:none;}
+    .grid2{grid-template-columns:1fr;}
+  }
+
+  /* Print */
+  @media print{
+    body{background:#fff;}
+    .wrap{grid-template-columns:1fr; max-width:100%; padding:0; gap:14px;}
+    .masthead{background:#fff !important; color:#1E2530 !important; border:1px solid #ccc;}
+    .masthead .brand-line, .masthead .period{color:#5B6472 !important;}
+    .masthead .company-input{color:#1E2530 !important; border-bottom-color:#aaa;}
+    .actions, .btn, .scale button:not(.active){display:none !important;}
+    .scale button.active{background:#2C4A5E !important; color:#fff !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .gauge-card{background:#2C4A5E !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .panel-sticky{position:static !important; box-shadow:none;}
+    .card, .cat-breakdown{border:1px solid #ccc; break-inside:avoid;}
+    .flag-box{background:#fdf1f1 !important; -webkit-print-color-adjust:exact;}
+    .print-footer{display:block !important;}
+  }
+  .print-footer{
+    display:none;
+    grid-column:1/-1;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:#5B6472;
+    border-top:1px dashed #aaa;
+    padding-top:10px;
+    margin-top:6px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <div class="brand-line">Sistem Evaluasi Kinerja</div>
+      <h1>Formulir Evaluasi Kinerja Karyawan</h1>
+      <input class="company-input" id="companyName" type="text" placeholder="Indonesia Manufacturing Co.">
+    </div>
+    <div class="period">
+      Periode Evaluasi<br>
+      <input class="company-input" id="periodInput" type="text" placeholder="mis. Semester I 2026" style="width:200px; margin-top:4px;">
+    </div>
+  </header>
+
+  <main>
+
+    <section class="card">
+      <h2>Data Karyawan</h2>
+      <p class="sub">Informasi dasar untuk identifikasi dokumen evaluasi.</p>
+      <div class="grid2">
+        <div class="field"><label>Nama Karyawan</label><input type="text" id="empName"></div>
+        <div class="field"><label>NIK / ID Karyawan</label><input type="text" id="empId"></div>
+        <div class="field"><label>Jabatan</label><input type="text" id="empPosition"></div>
+        <div class="field">
+          <label>Divisi</label>
+          <select id="empDivision">
+            <option value="core">Produksi / Operasional / Gudang</option>
+            <option value="qc">Quality Control (QC)</option>
+            <option value="purchasing">Purchasing / Procurement</option>
+            <option value="marketing">Marketing & Sales</option>
+            <option value="finance">Finance & Accounting</option>
+            <option value="hr">Human Resources & GA</option>
+            <option value="it">IT & Sistem</option>
+            <option value="support">Administratif Umum / Lainnya</option>
+          </select>
+        </div>
+        <div class="field"><label>Nama Evaluator</label><input type="text" id="evaluatorName"></div>
+        <div class="field"><label>Tanggal Evaluasi</label><input type="date" id="evalDate"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Hard Skill <span id="divisionTag" style="color:var(--ink-soft); text-transform:none; font-weight:500;">(Produksi/Operasional)</span></h2>
+      <p class="sub">Parameter menyesuaikan otomatis sesuai divisi. Nama &amp; deskripsi parameter <strong>bisa diklik dan diedit langsung</strong> agar sesuai istilah SOP internal perusahaan Anda. Bobot kategori: 40%.</p>
+      <div id="hardSkillList"></div>
+    </section>
+
+    <section class="card">
+      <h2>Soft Skill</h2>
+      <p class="sub">Parameter perilaku kerja, berlaku untuk seluruh divisi. Bobot kategori: 30%.</p>
+      <div id="softSkillList"></div>
+    </section>
+
+    <section class="card">
+      <h2>KPI &amp; Kehadiran</h2>
+      <p class="sub">Masukkan persentase capaian — sistem otomatis mengonversi ke skala 1–5. Bobot kategori: 30%.</p>
+      <div id="kpiList"></div>
+    </section>
+
+    <section class="card">
+      <h2>Catatan &amp; Rencana Pengembangan</h2>
+      <p class="sub">Opsional — catatan kualitatif evaluator, tidak memengaruhi skor.</p>
+      <textarea id="notes" placeholder="Contoh: perlu penguatan pada aspek ketelitian laporan bulanan; direkomendasikan mengikuti pelatihan..."></textarea>
+    </section>
+
+  </main>
+
+  <aside class="panel-sticky">
+    <div class="gauge-card">
+      <div class="eyebrow">Skor Total (Real-time)</div>
+      <div class="gauge-wrap">
+        <svg viewBox="0 0 220 130" width="100%" height="100%">
+          <path d="M 15 115 A 95 95 0 0 1 205 115" fill="none" stroke="#334A57" stroke-width="14" stroke-linecap="round"/>
+          <path id="gaugeArc" d="M 15 115 A 95 95 0 0 1 205 115" fill="none" stroke="#D98E04" stroke-width="14" stroke-linecap="round" stroke-dasharray="298" stroke-dashoffset="298"/>
+        </svg>
+        <div class="gauge-score" id="gaugeScore">0.0<span>/5</span></div>
+      </div>
+      <div id="verdictTag" class="verdict-tag">Menunggu input</div>
+    </div>
+
+    <div class="cat-breakdown">
+      <h3>Rincian Kategori</h3>
+      <div class="cat-row"><span>Hard Skill (40%)</span><span class="val" id="catHard">0.0</span></div>
+      <div class="cat-row"><span>Soft Skill (30%)</span><span class="val" id="catSoft">0.0</span></div>
+      <div class="cat-row"><span>KPI (30%)</span><span class="val" id="catKpi">0.0</span></div>
+    </div>
+
+    <div class="flag-box" id="flagBox"></div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="exportBtn">Export ke PDF</button>
+      <button class="btn btn-ghost" id="resetBtn">Reset</button>
+    </div>
+  </aside>
+
+  <div class="print-footer">
+    Dokumen ini dihasilkan dan divalidasi secara digital oleh Sistem Evaluasi Kinerja pada <span id="printTimestamp"></span>.
+    Rekomendasi dihitung otomatis berdasarkan input penilai — tidak memerlukan tanda tangan basah untuk keabsahan internal.
+  </div>
+
+  <footer class="note">Rekomendasi dihasilkan otomatis berdasarkan bobot standar (Hard Skill 40% / Soft Skill 30% / KPI 30%) dan ambang batas minimum per kategori (≥ 3.0). Sesuaikan bobot pada kode sumber bila kebijakan internal perusahaan berbeda.</footer>
+
+</div>
+
+<script>
+const SCALE_LABELS = ["Sangat Kurang","Kurang","Cukup","Baik","Sangat Baik"];
+
+const DIVISION_LABELS = {
+  core: "Produksi/Operasional", qc: "Quality Control", purchasing: "Purchasing",
+  marketing: "Marketing & Sales", finance: "Finance & Accounting", hr: "HR & GA",
+  it: "IT & Sistem", support: "Administratif Umum"
+};
+
+const HARD_SKILLS = {
+  core: [
+    ["Penguasaan Pengoperasian Mesin / Alat Kerja","Kecakapan teknis menjalankan mesin/alat sesuai standar produksi"],
+    ["Kepatuhan terhadap SOP Produksi","Konsistensi mengikuti prosedur operasional yang ditetapkan"],
+    ["Ketelitian & Kualitas Hasil Kerja","Tingkat kesalahan/reject dan konsistensi mutu output"],
+    ["Pencapaian Target Produksi / Output","Kesesuaian hasil kerja dengan target kuantitas yang ditetapkan"],
+    ["Kepatuhan Prosedur K3 (Keselamatan Kerja)","Disiplin terhadap standar keselamatan dan penggunaan APD"]
+  ],
+  qc: [
+    ["Akurasi Inspeksi & Sampling","Ketepatan menerapkan standar sampling/inspection plan yang berlaku"],
+    ["Pemahaman Spesifikasi & Standar Mutu","Penguasaan spesifikasi produk dan toleransi yang ditetapkan"],
+    ["Dokumentasi Temuan Ketidaksesuaian","Akurasi kategori dan pencatatan defect/non-conformance"],
+    ["Penggunaan Alat Ukur / Uji","Kecakapan mengoperasikan dan mengkalibrasi alat ukur/uji mutu"],
+    ["Kepatuhan Prosedur CAPA","Konsistensi tindak lanjut perbaikan dan pencegahan ketidaksesuaian mutu"]
+  ],
+  purchasing: [
+    ["Negosiasi Harga & Kontrak Vendor","Kemampuan mendapatkan harga/term terbaik bagi perusahaan"],
+    ["Akurasi & Ketepatan Waktu Proses PO","Minimnya kesalahan dan keterlambatan pemrosesan purchase order"],
+    ["Evaluasi & Manajemen Vendor","Konsistensi menilai kinerja dan mencari alternatif pemasok"],
+    ["Kepatuhan Prosedur Pengadaan","Konsistensi mengikuti SOP tender/approval pengadaan barang-jasa"],
+    ["Manajemen Lead Time & Ketersediaan Stok","Ketepatan perencanaan agar stok tidak terlambat/menumpuk"]
+  ],
+  marketing: [
+    ["Pencapaian Target Penjualan / Leads","Kesesuaian hasil kerja dengan target yang ditetapkan"],
+    ["Kualitas Materi & Strategi Kampanye","Efektivitas konten/kampanye pemasaran yang dihasilkan"],
+    ["Pemahaman Produk & Pasar","Kedalaman pengetahuan tentang produk, pelanggan, dan kompetitor"],
+    ["Pengelolaan Relasi Pelanggan/Mitra","Konsistensi menjaga hubungan dengan klien atau mitra distribusi"],
+    ["Pelaporan & Analisis Kinerja Pemasaran","Ketepatan mengukur dan melaporkan hasil aktivitas marketing"]
+  ],
+  finance: [
+    ["Akurasi Pencatatan & Rekonsiliasi","Minimnya selisih/kesalahan pada pembukuan dan rekonsiliasi"],
+    ["Kepatuhan Prosedur & Kebijakan Keuangan","Konsistensi mengikuti SOP dan batas otorisasi keuangan"],
+    ["Ketepatan Waktu Pelaporan Keuangan","Konsistensi menyampaikan laporan sesuai tenggat yang ditetapkan"],
+    ["Pemahaman Perpajakan & Regulasi Terkait","Penguasaan aturan pajak/keuangan yang berlaku bagi perusahaan"],
+    ["Manajemen Cash Flow / Anggaran","Ketepatan mengelola arus kas atau anggaran unit kerja"]
+  ],
+  hr: [
+    ["Ketepatan Administrasi Kepegawaian","Akurasi data personalia, payroll, dan dokumen kepegawaian"],
+    ["Penanganan Rekrutmen & Onboarding","Efektivitas proses seleksi dan orientasi karyawan baru"],
+    ["Hubungan Industrial & Kepatuhan Regulasi","Konsistensi menerapkan aturan ketenagakerjaan yang berlaku"],
+    ["Dukungan Program Pelatihan & Pengembangan","Kontribusi pada perencanaan dan pelaksanaan pelatihan karyawan"],
+    ["Pengelolaan Fasilitas & Layanan Umum (GA)","Ketepatan pengelolaan aset, fasilitas, dan kebutuhan operasional"]
+  ],
+  it: [
+    ["Troubleshooting & Dukungan Teknis","Kecepatan dan ketepatan menangani kendala sistem/perangkat"],
+    ["Pengelolaan & Keamanan Data/Sistem","Konsistensi menjaga keamanan dan integritas data perusahaan"],
+    ["Pemeliharaan Infrastruktur IT","Ketepatan maintenance perangkat keras, lunak, dan jaringan"],
+    ["Dokumentasi Teknis & SOP IT","Kelengkapan dokumentasi sistem dan prosedur teknis"],
+    ["Dukungan Implementasi Sistem Baru","Kontribusi pada rollout atau upgrade sistem kerja"]
+  ],
+  support: [
+    ["Penguasaan Sistem / Aplikasi Kerja","Kecakapan menggunakan ERP, MS Office, atau sistem kerja terkait"],
+    ["Akurasi Data & Pelaporan","Tingkat ketepatan dan minimnya revisi pada laporan/data yang dihasilkan"],
+    ["Kepatuhan Proses Administrasi","Konsistensi mengikuti alur dan tenggat proses administratif"],
+    ["Kualitas Dokumentasi Kerja","Kerapian, kelengkapan, dan keterbacaan dokumen kerja"],
+    ["Koordinasi Lintas Departemen","Efektivitas komunikasi dan kerja sama dengan divisi lain"]
+  ]
+};
+
+const SOFT_SKILLS = [
+  ["Komunikasi","Kejelasan menyampaikan dan menerima informasi kerja"],
+  ["Kerjasama Tim","Kontribusi aktif dan sikap kolaboratif dalam tim"],
+  ["Inisiatif & Proaktif","Kesediaan mengambil langkah tanpa selalu diarahkan"],
+  ["Disiplin & Kehadiran","Ketepatan waktu dan konsistensi kehadiran kerja"],
+  ["Kemampuan Memecahkan Masalah","Ketepatan dan kecepatan menangani kendala kerja"],
+  ["Adaptabilitas terhadap Perubahan","Fleksibilitas menghadapi perubahan proses/prioritas kerja"]
+];
+
+const state = { hard:{}, soft:{}, kpi:{achievement:null, attendance:null} };
+
+function pctToScore(pct){
+  if(pct === null || isNaN(pct)) return null;
+  if(pct >= 100) return 5;
+  if(pct >= 90) return 4;
+  if(pct >= 75) return 3;
+  if(pct >= 60) return 2;
+  return 1;
+}
+
+function buildScaleRow(container, key, title, desc, group, editable){
+  const item = document.createElement('div');
+  item.className = 'item';
+  const editAttr = editable ? 'contenteditable="true" spellcheck="false"' : '';
+  const editClass = editable ? 'editable-field' : '';
+  item.innerHTML = `
+    <div>
+      <div class="name ${editClass}" ${editAttr}>${title}</div>
+      <div class="desc ${editClass}" ${editAttr}>${desc}</div>
+    </div>
+    <div class="scale" data-key="${key}"></div>
+    <div class="scale-legend"><span>1 · Sangat Kurang</span><span>3 · Cukup</span><span>5 · Sangat Baik</span></div>
+  `;
+  const scaleEl = item.querySelector('.scale');
+  for(let i=1;i<=5;i++){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = i;
+    b.title = SCALE_LABELS[i-1];
+    b.addEventListener('click', ()=>{
+      scaleEl.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      state[group][key] = i;
+      recalculate();
+    });
+    scaleEl.appendChild(b);
+  }
+  container.appendChild(item);
+}
+
+function renderHardSkills(division){
+  const container = document.getElementById('hardSkillList');
+  container.innerHTML = '';
+  state.hard = {};
+  document.getElementById('divisionTag').textContent = `(${DIVISION_LABELS[division]})`;
+  HARD_SKILLS[division].forEach((s,i)=>{
+    buildScaleRow(container, 'h'+i, s[0], s[1], 'hard', true);
+  });
+  recalculate();
+}
+
+function renderSoftSkills(){
+  const container = document.getElementById('softSkillList');
+  SOFT_SKILLS.forEach((s,i)=>{
+    buildScaleRow(container, 's'+i, s[0], s[1], 'soft', false);
+  });
+}
+
+function renderKpi(){
+  const container = document.getElementById('kpiList');
+  const rows = [
+    {key:'achievement', label:'Pencapaian Target KPI', hint:'% capaian terhadap target kerja periode ini'},
+    {key:'attendance', label:'Tingkat Kehadiran', hint:'% kehadiran efektif terhadap hari kerja'}
+  ];
+  rows.forEach(r=>{
+    const row = document.createElement('div');
+    row.className = 'kpi-row';
+    row.innerHTML = `
+      <div>
+        <div class="name" style="font-size:14px; font-weight:500;">${r.label}</div>
+        <div class="desc">${r.hint}</div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <input type="number" min="0" max="150" placeholder="%" id="kpi_${r.key}">
+      </div>
+      <div class="converted" id="kpi_${r.key}_score">–</div>
+    `;
+    container.appendChild(row);
+    row.querySelector('input').addEventListener('input', (e)=>{
+      const pct = e.target.value === '' ? null : parseFloat(e.target.value);
+      const sc = pctToScore(pct);
+      state.kpi[r.key] = sc;
+      document.getElementById(`kpi_${r.key}_score`).textContent = sc ? `${sc}/5` : '–';
+      recalculate();
+    });
+  });
+}
+
+function avg(obj, expectedCount){
+  const vals = Object.values(obj).filter(v=>v!==null && v!==undefined);
+  if(vals.length < expectedCount) return null;
+  return vals.reduce((a,b)=>a+b,0)/vals.length;
+}
+
+function recalculate(){
+  const hardAvg = avg(state.hard, HARD_SKILLS[document.getElementById('empDivision').value].length);
+  const softAvg = avg(state.soft, SOFT_SKILLS.length);
+  const kpiAvg = avg(state.kpi, 2);
+
+  document.getElementById('catHard').textContent = hardAvg ? hardAvg.toFixed(2) : '–';
+  document.getElementById('catSoft').textContent = softAvg ? softAvg.toFixed(2) : '–';
+  document.getElementById('catKpi').textContent = kpiAvg ? kpiAvg.toFixed(2) : '–';
+
+  [['catHard',hardAvg],['catSoft',softAvg],['catKpi',kpiAvg]].forEach(([id,v])=>{
+    const el = document.getElementById(id);
+    el.style.background = ''; el.style.color = '';
+    if(v!==null){
+      if(v < 3){ el.style.background='var(--bad-bg)'; el.style.color='var(--bad)'; }
+      else { el.style.background='var(--ok-bg)'; el.style.color='var(--ok)'; }
+    }
+  });
+
+  const gaugeEl = document.getElementById('gaugeScore');
+  const arcEl = document.getElementById('gaugeArc');
+  const tagEl = document.getElementById('verdictTag');
+  const flagEl = document.getElementById('flagBox');
+
+  if(hardAvg===null || softAvg===null || kpiAvg===null){
+    gaugeEl.innerHTML = (hardAvg||softAvg||kpiAvg) ?
+      `${(((hardAvg||0)*0.4)+((softAvg||0)*0.3)+((kpiAvg||0)*0.3)).toFixed(1)}<span>/5</span>` : `0.0<span>/5</span>`;
+    tagEl.textContent = 'Menunggu input lengkap';
+    tagEl.style.background = '#3A4B57'; tagEl.style.color='#C7D3D9';
+    arcEl.setAttribute('stroke-dashoffset', 298);
+    flagEl.classList.remove('show');
+    return;
+  }
+
+  const total = hardAvg*0.4 + softAvg*0.3 + kpiAvg*0.3;
+  gaugeEl.innerHTML = `${total.toFixed(1)}<span>/5</span>`;
+  const offset = 298 - (298 * (total/5));
+  arcEl.setAttribute('stroke-dashoffset', Math.max(0, offset));
+
+  const failedCats = [];
+  if(hardAvg < 3) failedCats.push('Hard Skill');
+  if(softAvg < 3) failedCats.push('Soft Skill');
+  if(kpiAvg < 3) failedCats.push('KPI');
+
+  if(failedCats.length > 0){
+    tagEl.textContent = 'Not Recommended';
+    tagEl.style.background = 'var(--bad-bg)'; tagEl.style.color = 'var(--bad)';
+    flagEl.textContent = `Below minimum threshold (< 3.0): ${failedCats.join(', ')}. Kriteria kelulusan mensyaratkan seluruh kategori ≥ 3.0, bukan hanya skor total.`;
+    flagEl.classList.add('show');
+  } else if(total >= 4.0){
+    tagEl.textContent = 'High Recommendation';
+    tagEl.style.background = 'var(--ok-bg)'; tagEl.style.color = 'var(--ok)';
+    flagEl.classList.remove('show');
+  } else if(total >= 3.0){
+    tagEl.textContent = 'Recommended';
+    tagEl.style.background = 'var(--ok-bg)'; tagEl.style.color = 'var(--ok)';
+    flagEl.classList.remove('show');
+  } else {
+    tagEl.textContent = 'Further Evaluation Needed';
+    tagEl.style.background = 'var(--warn-bg)'; tagEl.style.color = 'var(--warn)';
+    flagEl.classList.remove('show');
+  }
+}
+
+document.getElementById('empDivision').addEventListener('change', (e)=>{
+  renderHardSkills(e.target.value);
+});
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  document.getElementById('printTimestamp').textContent = new Date().toLocaleString('id-ID', {dateStyle:'long', timeStyle:'short'});
+  window.print();
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  if(confirm('Reset seluruh isian formulir?')) location.reload();
+});
+
+renderHardSkills('core');
+renderSoftSkills();
+renderKpi();
+recalculate();
+</script>
+</body>
+</html>

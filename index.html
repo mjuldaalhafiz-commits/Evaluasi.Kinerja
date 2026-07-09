@@ -643,12 +643,13 @@ function recalculate(){
   if(kpiAvg < 3) failedCats.push('KPI');
 
   if(failedCats.length > 0){
-    tagEl.textContent = 'Not Recommended';
+    tagEl.textContent = 'Further Evaluation Required';
     tagEl.style.background = 'var(--bad-bg)'; tagEl.style.color = 'var(--bad)';
-    flagEl.textContent = `Below minimum threshold (< 3.0): ${failedCats.join(', ')}. The passing criteria require all categories to be ≥ 3.0, not just the total score.`;
+    flagEl.textContent =
+    `The following category(ies) are below the minimum threshold (3.0): ${failedCats.join(', ')}. Each assessment category must achieve a minimum score of 3.0 before an employee can be considered recommended.`;
     flagEl.classList.add('show');
   } else if(total >= 4.0){
-    tagEl.textContent = 'High Recommendation';
+    tagEl.textContent = 'High Recommended';
     tagEl.style.background = 'var(--ok-bg)'; tagEl.style.color = 'var(--ok)';
     flagEl.classList.remove('show');
   } else if(total >= 3.0){
@@ -656,9 +657,14 @@ function recalculate(){
     tagEl.style.background = 'var(--ok-bg)'; tagEl.style.color = 'var(--ok)';
     flagEl.classList.remove('show');
   } else {
-    tagEl.textContent = 'Further Evaluation Needed';
-    tagEl.style.background = 'var(--warn-bg)'; tagEl.style.color = 'var(--warn)';
-    flagEl.classList.remove('show');
+     tagEl.textContent = 'Below Minimum Threshold';
+  tagEl.style.background = 'var(--bad-bg)';
+  tagEl.style.color = 'var(--bad)';
+
+  flagEl.textContent =
+    'The overall performance score is below the minimum passing threshold (3.0).';
+
+  flagEl.classList.add('show');
   }
 }
 

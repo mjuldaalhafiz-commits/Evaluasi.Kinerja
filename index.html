@@ -325,40 +325,40 @@
       <input class="company-input" id="companyName" type="text" placeholder="Indonesia Manufacturing Co.">
     </div>
     <div class="period">
-      Periode Evaluasi<br>
-      <input class="company-input" id="periodInput" type="text" placeholder="mis. Semester I 2026" style="width:200px; margin-top:4px;">
+          Evaluation Period<br>
+      <input class="company-input" id="periodInput" type="text" placeholder= "Semester I 2026" style="width:200px; margin-top:4px;">
     </div>
   </header>
 
   <main>
 
     <section class="card">
-      <h2>Data Karyawan</h2>
-      <p class="sub">Informasi dasar untuk identifikasi dokumen evaluasi.</p>
+      <h2>Employee Information</h2>
+      <p class="sub">Information Base for Employee Identification</p>
       <div class="grid2">
-        <div class="field"><label>Nama Karyawan</label><input type="text" id="empName"></div>
-        <div class="field"><label>NIK / ID Karyawan</label><input type="text" id="empId"></div>
-        <div class="field"><label>Jabatan</label><input type="text" id="empPosition"></div>
+        <div class="field"><label>Employee Name</label><input type="text" id="empName"></div>
+        <div class="field"><label>NIK / Employee ID</label><input type="text" id="empId"></div>
+        <div class="field"><label>Position</label><input type="text" id="empPosition"></div>
         <div class="field">
-          <label>Divisi</label>
+          <label>Division</label>
           <select id="empDivision">
-            <option value="core">Produksi / Operasional / Gudang</option>
+            <option value="core">Production / Operational / Warehouse</option>
             <option value="qc">Quality Control (QC)</option>
             <option value="purchasing">Purchasing / Procurement</option>
             <option value="marketing">Marketing & Sales</option>
             <option value="finance">Finance & Accounting</option>
             <option value="hr">Human Resources & GA</option>
             <option value="it">IT & Sistem</option>
-            <option value="support">Administratif Umum / Lainnya</option>
+            <option value="support">General Administration / Other</option>
           </select>
         </div>
-        <div class="field"><label>Nama Evaluator</label><input type="text" id="evaluatorName"></div>
-        <div class="field"><label>Tanggal Evaluasi</label><input type="date" id="evalDate"></div>
+        <div class="field"><label>Name of Evaluator</label><input type="text" id="evaluatorName"></div>
+        <div class="field"><label>Date of Evaluation</label><input type="date" id="evalDate"></div>
       </div>
     </section>
 
     <section class="card">
-      <h2>Hard Skill <span id="divisionTag" style="color:var(--ink-soft); text-transform:none; font-weight:500;">(Produksi/Operasional)</span></h2>
+      <h2>Hard Skill <span id="divisionTag" style="color:var(--ink-soft); text-transform:none; font-weight:500;">(Production/Operational)</span></h2>
       <p class="sub">Parameter menyesuaikan otomatis sesuai divisi. Nama &amp; deskripsi parameter <strong>bisa diklik dan diedit langsung</strong> agar sesuai istilah SOP internal perusahaan Anda. Bobot kategori: 40%.</p>
       <div id="hardSkillList"></div>
     </section>
@@ -370,22 +370,22 @@
     </section>
 
     <section class="card">
-      <h2>KPI &amp; Kehadiran</h2>
-      <p class="sub">Masukkan persentase capaian — sistem otomatis mengonversi ke skala 1–5. Bobot kategori: 30%.</p>
+      <h2>KPI &amp; Attendance</h2>
+      <p class="sub">Enter achievement percentage — the system automatically converts it to a scale of 1–5. Bobot kategori: 30%.</p>
       <div id="kpiList"></div>
     </section>
 
     <section class="card">
-      <h2>Catatan &amp; Rencana Pengembangan</h2>
-      <p class="sub">Opsional — catatan kualitatif evaluator, tidak memengaruhi skor.</p>
-      <textarea id="notes" placeholder="Contoh: perlu penguatan pada aspek ketelitian laporan bulanan; direkomendasikan mengikuti pelatihan..."></textarea>
+      <h2>Notes &amp; Development Plan</h2>
+      <p class="sub">Optional — qualitative notes from the evaluator, does not affect the score.</p>
+      <textarea id="notes" placeholder="Example: need improvement in monthly report accuracy; recommended to attend training..."></textarea>
     </section>
 
   </main>
 
   <aside class="panel-sticky">
     <div class="gauge-card">
-      <div class="eyebrow">Skor Total (Real-time)</div>
+      <div class="eyebrow">Score Total (Real-time)</div>
       <div class="gauge-wrap">
         <svg viewBox="0 0 220 130" width="100%" height="100%">
           <path d="M 15 115 A 95 95 0 0 1 205 115" fill="none" stroke="#334A57" stroke-width="14" stroke-linecap="round"/>
@@ -393,11 +393,11 @@
         </svg>
         <div class="gauge-score" id="gaugeScore">0.0<span>/5</span></div>
       </div>
-      <div id="verdictTag" class="verdict-tag">Menunggu input</div>
+      <div id="verdictTag" class="verdict-tag">Waiting for input</div>
     </div>
 
     <div class="cat-breakdown">
-      <h3>Rincian Kategori</h3>
+      <h3>Category Details</h3>
       <div class="cat-row"><span>Hard Skill (40%)</span><span class="val" id="catHard">0.0</span></div>
       <div class="cat-row"><span>Soft Skill (30%)</span><span class="val" id="catSoft">0.0</span></div>
       <div class="cat-row"><span>KPI (30%)</span><span class="val" id="catKpi">0.0</span></div>
@@ -412,11 +412,11 @@
   </aside>
 
   <div class="print-footer">
-    Dokumen ini dihasilkan dan divalidasi secara digital oleh Sistem Evaluasi Kinerja pada <span id="printTimestamp"></span>.
-    Rekomendasi dihitung otomatis berdasarkan input penilai — tidak memerlukan tanda tangan basah untuk keabsahan internal.
+    This document was generated and digitally validated by the Performance Evaluation System on <span id="printTimestamp"></span>.
+    Recommendations are automatically calculated based on evaluator input — no wet signature required for internal validity.
   </div>
 
-  <footer class="note">Rekomendasi dihasilkan otomatis berdasarkan bobot standar (Hard Skill 40% / Soft Skill 30% / KPI 30%) dan ambang batas minimum per kategori (≥ 3.0). Sesuaikan bobot pada kode sumber bila kebijakan internal perusahaan berbeda.</footer>
+  <footer class="note">Recommendations are automatically generated based on standard weights (Hard Skill 40% / Soft Skill 30% / KPI 30%) and minimum thresholds per category (≥ 3.0). Adjust weights in the source code if company policies differ.</footer>
 
 </div>
 
@@ -426,75 +426,82 @@ const SCALE_LABELS = ["Sangat Kurang","Kurang","Cukup","Baik","Sangat Baik"];
 const DIVISION_LABELS = {
   core: "Produksi/Operasional", qc: "Quality Control", purchasing: "Purchasing",
   marketing: "Marketing & Sales", finance: "Finance & Accounting", hr: "HR & GA",
-  it: "IT & Sistem", support: "Administratif Umum"
+  it: "IT & Sistem", support: "General Administration / Other"
 };
 
 const HARD_SKILLS = {
   core: [
-    ["Penguasaan Pengoperasian Mesin / Alat Kerja","Kecakapan teknis menjalankan mesin/alat sesuai standar produksi"],
-    ["Kepatuhan terhadap SOP Produksi","Konsistensi mengikuti prosedur operasional yang ditetapkan"],
-    ["Ketelitian & Kualitas Hasil Kerja","Tingkat kesalahan/reject dan konsistensi mutu output"],
-    ["Pencapaian Target Produksi / Output","Kesesuaian hasil kerja dengan target kuantitas yang ditetapkan"],
-    ["Kepatuhan Prosedur K3 (Keselamatan Kerja)","Disiplin terhadap standar keselamatan dan penggunaan APD"]
+    ["Machine & Equipment Operation", "Technical ability to operate machines and equipment according to production standards"],
+    ["Compliance with Production SOPs", "Consistency in following established production procedures"],
+    ["Attention to Detail & Work Quality", "Accuracy, low defect rate, and consistency in work quality"],
+    ["Production Target Achievement", "Ability to meet assigned production quantity targets"],
+    ["Occupational Health & Safety (OHS) Compliance", "Adherence to workplace safety procedures and proper PPE usage"]
   ],
+
   qc: [
-    ["Akurasi Inspeksi & Sampling","Ketepatan menerapkan standar sampling/inspection plan yang berlaku"],
-    ["Pemahaman Spesifikasi & Standar Mutu","Penguasaan spesifikasi produk dan toleransi yang ditetapkan"],
-    ["Dokumentasi Temuan Ketidaksesuaian","Akurasi kategori dan pencatatan defect/non-conformance"],
-    ["Penggunaan Alat Ukur / Uji","Kecakapan mengoperasikan dan mengkalibrasi alat ukur/uji mutu"],
-    ["Kepatuhan Prosedur CAPA","Konsistensi tindak lanjut perbaikan dan pencegahan ketidaksesuaian mutu"]
+    ["Inspection & Sampling Accuracy", "Accuracy in applying inspection and sampling standards"],
+    ["Product Specifications & Quality Standards", "Understanding of product specifications and quality tolerance requirements"],
+    ["Non-Conformance Documentation", "Accuracy in documenting defects and non-conformance findings"],
+    ["Measurement & Testing Equipment", "Proficiency in operating and calibrating measuring/testing instruments"],
+    ["CAPA Compliance", "Consistency in implementing corrective and preventive actions"]
   ],
+
   purchasing: [
-    ["Negosiasi Harga & Kontrak Vendor","Kemampuan mendapatkan harga/term terbaik bagi perusahaan"],
-    ["Akurasi & Ketepatan Waktu Proses PO","Minimnya kesalahan dan keterlambatan pemrosesan purchase order"],
-    ["Evaluasi & Manajemen Vendor","Konsistensi menilai kinerja dan mencari alternatif pemasok"],
-    ["Kepatuhan Prosedur Pengadaan","Konsistensi mengikuti SOP tender/approval pengadaan barang-jasa"],
-    ["Manajemen Lead Time & Ketersediaan Stok","Ketepatan perencanaan agar stok tidak terlambat/menumpuk"]
+    ["Vendor Price & Contract Negotiation", "Ability to secure the best pricing and contract terms"],
+    ["Purchase Order Accuracy & Timeliness", "Minimizing errors and delays in purchase order processing"],
+    ["Vendor Evaluation & Management", "Consistency in evaluating vendor performance and identifying alternatives"],
+    ["Procurement Process Compliance", "Adherence to procurement policies and approval procedures"],
+    ["Lead Time & Inventory Management", "Effective planning to prevent stock shortages or overstock"]
   ],
+
   marketing: [
-    ["Pencapaian Target Penjualan / Leads","Kesesuaian hasil kerja dengan target yang ditetapkan"],
-    ["Kualitas Materi & Strategi Kampanye","Efektivitas konten/kampanye pemasaran yang dihasilkan"],
-    ["Pemahaman Produk & Pasar","Kedalaman pengetahuan tentang produk, pelanggan, dan kompetitor"],
-    ["Pengelolaan Relasi Pelanggan/Mitra","Konsistensi menjaga hubungan dengan klien atau mitra distribusi"],
-    ["Pelaporan & Analisis Kinerja Pemasaran","Ketepatan mengukur dan melaporkan hasil aktivitas marketing"]
+    ["Sales & Lead Target Achievement", "Ability to achieve assigned sales and lead generation targets"],
+    ["Campaign Strategy & Content Quality", "Effectiveness of marketing campaigns and promotional content"],
+    ["Product & Market Knowledge", "Understanding of products, customers, and competitors"],
+    ["Customer & Partner Relationship Management", "Ability to maintain strong relationships with customers and business partners"],
+    ["Marketing Performance Analysis", "Accuracy in measuring and reporting marketing performance"]
   ],
+
   finance: [
-    ["Akurasi Pencatatan & Rekonsiliasi","Minimnya selisih/kesalahan pada pembukuan dan rekonsiliasi"],
-    ["Kepatuhan Prosedur & Kebijakan Keuangan","Konsistensi mengikuti SOP dan batas otorisasi keuangan"],
-    ["Ketepatan Waktu Pelaporan Keuangan","Konsistensi menyampaikan laporan sesuai tenggat yang ditetapkan"],
-    ["Pemahaman Perpajakan & Regulasi Terkait","Penguasaan aturan pajak/keuangan yang berlaku bagi perusahaan"],
-    ["Manajemen Cash Flow / Anggaran","Ketepatan mengelola arus kas atau anggaran unit kerja"]
+    ["Financial Recording & Reconciliation", "Accuracy in bookkeeping and financial reconciliation"],
+    ["Financial Policy Compliance", "Consistency in following financial procedures and authorization policies"],
+    ["Financial Reporting Timeliness", "Ability to submit financial reports on schedule"],
+    ["Tax & Financial Regulation Knowledge", "Understanding of taxation and financial regulations"],
+    ["Cash Flow & Budget Management", "Ability to manage cash flow and departmental budgets effectively"]
   ],
+
   hr: [
-    ["Ketepatan Administrasi Kepegawaian","Akurasi data personalia, payroll, dan dokumen kepegawaian"],
-    ["Penanganan Rekrutmen & Onboarding","Efektivitas proses seleksi dan orientasi karyawan baru"],
-    ["Hubungan Industrial & Kepatuhan Regulasi","Konsistensi menerapkan aturan ketenagakerjaan yang berlaku"],
-    ["Dukungan Program Pelatihan & Pengembangan","Kontribusi pada perencanaan dan pelaksanaan pelatihan karyawan"],
-    ["Pengelolaan Fasilitas & Layanan Umum (GA)","Ketepatan pengelolaan aset, fasilitas, dan kebutuhan operasional"]
+    ["HR Administration Accuracy", "Accuracy in managing employee records, payroll, and HR documentation"],
+    ["Recruitment & Onboarding", "Effectiveness in managing recruitment and employee onboarding processes"],
+    ["Employee Relations & Labor Compliance", "Compliance with labor regulations and employee relations practices"],
+    ["Learning & Development Support", "Contribution to employee training and development programs"],
+    ["General Affairs Management", "Effective management of company facilities, assets, and operational support"]
   ],
+
   it: [
-    ["Troubleshooting & Dukungan Teknis","Kecepatan dan ketepatan menangani kendala sistem/perangkat"],
-    ["Pengelolaan & Keamanan Data/Sistem","Konsistensi menjaga keamanan dan integritas data perusahaan"],
-    ["Pemeliharaan Infrastruktur IT","Ketepatan maintenance perangkat keras, lunak, dan jaringan"],
-    ["Dokumentasi Teknis & SOP IT","Kelengkapan dokumentasi sistem dan prosedur teknis"],
-    ["Dukungan Implementasi Sistem Baru","Kontribusi pada rollout atau upgrade sistem kerja"]
+    ["Technical Support & Troubleshooting", "Speed and accuracy in resolving technical issues"],
+    ["System & Data Security", "Maintaining data integrity and information security"],
+    ["IT Infrastructure Maintenance", "Maintenance of hardware, software, and network infrastructure"],
+    ["Technical Documentation & IT SOPs", "Preparation and maintenance of technical documentation and procedures"],
+    ["System Implementation Support", "Contribution to system implementation and upgrades"]
   ],
+
   support: [
-    ["Penguasaan Sistem / Aplikasi Kerja","Kecakapan menggunakan ERP, MS Office, atau sistem kerja terkait"],
-    ["Akurasi Data & Pelaporan","Tingkat ketepatan dan minimnya revisi pada laporan/data yang dihasilkan"],
-    ["Kepatuhan Proses Administrasi","Konsistensi mengikuti alur dan tenggat proses administratif"],
-    ["Kualitas Dokumentasi Kerja","Kerapian, kelengkapan, dan keterbacaan dokumen kerja"],
-    ["Koordinasi Lintas Departemen","Efektivitas komunikasi dan kerja sama dengan divisi lain"]
+    ["Business Systems Proficiency", "Proficiency in ERP, Microsoft Office, or other business applications"],
+    ["Data Accuracy & Reporting", "Accuracy and consistency in preparing reports and managing data"],
+    ["Administrative Process Compliance", "Adherence to administrative procedures and deadlines"],
+    ["Document Management", "Quality and organization of business documentation"],
+    ["Cross-Functional Coordination", "Effective collaboration across departments"]
   ]
 };
 
 const SOFT_SKILLS = [
-  ["Komunikasi","Kejelasan menyampaikan dan menerima informasi kerja"],
-  ["Kerjasama Tim","Kontribusi aktif dan sikap kolaboratif dalam tim"],
-  ["Inisiatif & Proaktif","Kesediaan mengambil langkah tanpa selalu diarahkan"],
-  ["Disiplin & Kehadiran","Ketepatan waktu dan konsistensi kehadiran kerja"],
-  ["Kemampuan Memecahkan Masalah","Ketepatan dan kecepatan menangani kendala kerja"],
-  ["Adaptabilitas terhadap Perubahan","Fleksibilitas menghadapi perubahan proses/prioritas kerja"]
+  ["Communication", "Ability to clearly convey and receive work-related information"],
+  ["Teamwork", "Active contribution and collaboration within a team"],
+  ["Initiative & Proactiveness", "Willingness to take action without constant supervision"],
+  ["Discipline & Attendance", "Punctuality and consistency in attendance"],
+  ["Problem Solving", "Ability to identify and resolve workplace issues effectively"],
+  ["Adaptability", "Flexibility in responding to changing work priorities and processes"]
 ];
 
 const state = { hard:{}, soft:{}, kpi:{achievement:null, attendance:null} };
